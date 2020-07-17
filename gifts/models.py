@@ -2,9 +2,9 @@ from django.contrib.auth.models import User
 from django.db import models
 
 TYPES = (
-    ('fundacja', 'fundacja'),
-    ('organizacja pozarzadowa', 'organizacja pozarzadowa'),
-    ('zbiorka lokalna', 'zbiorka lokalna')
+    (1, 'fundacja'),
+    (2, 'organizacja pozarządowa'),
+    (3, 'zbiórka lokalna')
 )
 
 
@@ -16,7 +16,7 @@ class Category(models.Model):
 class Institution(models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField()
-    type = models.CharField(choices=TYPES, default='fundacja', max_length=24)
+    type = models.IntegerField(choices=TYPES, default=1)
     categories = models.ManyToManyField(Category)
 
 
@@ -31,4 +31,4 @@ class Donation(models.Model):
     pick_up_date = models.DateField()
     pick_up_time = models.TimeField()
     pick_up_comment = models.TextField()
-    user = models.ForeignKey(User, default='Null', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, default=None, on_delete=models.CASCADE, null=True, blank=True)
