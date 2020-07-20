@@ -2,29 +2,31 @@
 {% load static %}
 {#<!DOCTYPE html>#}
 {#<html lang="pl">#}
+{#{% block head %}#}
 {#  <head>#}
 {#    <meta charset="UTF-8" />#}
 {#    <meta name="viewport" content="width=device-width, initial-scale=1.0" />#}
 {#    <meta http-equiv="X-UA-Compatible" content="ie=edge" />#}
 {#    <title>Document</title>#}
-{#    <link rel="stylesheet" href="css/style.css" />#}
+{#    <link rel="stylesheet" href="{% static 'css/style.css'%}" />#}
 {#  </head>#}
+{#{% endblock %}#}
 {#  <body>#}
 {% block content %}
 
     <header>
       <nav class="container container--70">
         <ul class="nav--actions">
-          <li><a href="#">Zaloguj</a></li>
+          <li><a href="/login/">Zaloguj</a></li>
           <li class="highlighted"><a href="#">Załóż konto</a></li>
         </ul>
 
         <ul>
-          <li><a href="#">Start</a></li>
-          <li><a href="#">O co chodzi?</a></li>
-          <li><a href="#">O nas</a></li>
-          <li><a href="#">Fundacje i organizacje</a></li>
-          <li><a href="#">Kontakt</a></li>
+          <li><a href="/">Start</a></li>
+          <li><a href="/#steps">O co chodzi?</a></li>
+          <li><a href="/#about-us">O nas</a></li>
+          <li><a href="/#help">Fundacje i organizacje</a></li>
+          <li><a href="/#contact">Kontakt</a></li>
         </ul>
       </nav>
     </header>
@@ -82,10 +84,10 @@
         <span class="bottom-line--copy">Copyright &copy; 2018</span>
         <div class="bottom-line--icons">
           <a href="#" class="btn btn--small"
-            ><img src="images/icon-facebook.svg"
+            ><img src="{% static 'images/icon-facebook.svg' %}"
           /></a>
           <a href="#" class="btn btn--small"
-            ><img src="images/icon-instagram.svg"
+            ><img src="{% static 'images/icon-instagram.svg' %}"
           /></a>
         </div>
       </div>
