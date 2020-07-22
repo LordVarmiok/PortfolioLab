@@ -109,7 +109,6 @@
       <!-- SLIDE 1 -->
       <div class="help--slides active" data-id="1">
         <p>W naszej bazie znajdziesz listę zweryfikowanych Fundacji, z którymi współpracujemy. Możesz sprawdzić czym się zajmują, komu pomagają i czego potrzebują.</p>
-
         <ul class="help--slides-items">
             {% for institution in institutions %}
                 {% if institution.type == 1 %}
@@ -148,13 +147,16 @@
 {#            <div class="col"><div class="text">ubrania, jedzenie, ciepłe koce</div></div>#}
 {#          </li>#}
         </ul>
-        <!-- Pagination
+        <!-- Pagination -->
         <ul class="help--slides-pagination">
+{#        {% for idx, page in enumarate(institutions) %}#}
+{#            <li><a href="#" class="btn btn--small btn--without-border active" data-page="1">{{ idx }}</a></li>#}
           <li><a href="#" class="btn btn--small btn--without-border active" data-page="1">1</a></li>
           <li><a href="#" class="btn btn--small btn--without-border" data-page="2">2</a></li>
           <li><a href="#" class="btn btn--small btn--without-border" data-page="3">3</a></li>
+{#        {% endfor %}#}
         </ul>
-        -->
+
       </div>
 
 
