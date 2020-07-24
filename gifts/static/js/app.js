@@ -60,7 +60,9 @@ document.addEventListener("DOMContentLoaded", function() {
      * TODO: callback to page change event
      */
     changePage(e) {
-      e.preventDefault();
+      // e.preventDefault();
+      // const parent = document.getElementById('help')
+      // parent.scrollIntoView()
       const page = e.target.dataset.page;
 
       console.log(page);

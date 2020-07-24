@@ -110,12 +110,13 @@
       <div class="help--slides active" data-id="1">
         <p>W naszej bazie znajdziesz listę zweryfikowanych Fundacji, z którymi współpracujemy. Możesz sprawdzić czym się zajmują, komu pomagają i czego potrzebują.</p>
         <ul class="help--slides-items">
-            {% for institution in institutions %}
-                {% if institution.type == 1 %}
+            {% for fundation in fundations %}
+                {% if fundation.type == 1 %}
+{#                    IF JEST NIEPOTRZEBNY#}
                     <li>
                         <div class="col">
-                            <div class="title">{{ institution.name }}</div>
-                            <div class="subtitle">{{ institution.description }}</div>
+                            <div class="title">{{ fundation.name }}</div>
+                            <div class="subtitle">{{ fundation.description }}</div>
                         </div>
                     </li>
                 {% endif %}
@@ -147,15 +148,26 @@
 {#            <div class="col"><div class="text">ubrania, jedzenie, ciepłe koce</div></div>#}
 {#          </li>#}
         </ul>
+      {% if fundations.has_other_pages %}
         <!-- Pagination -->
         <ul class="help--slides-pagination">
-{#        {% for idx, page in enumarate(institutions) %}#}
-{#            <li><a href="#" class="btn btn--small btn--without-border active" data-page="1">{{ idx }}</a></li>#}
-          <li><a href="#" class="btn btn--small btn--without-border active" data-page="1">1</a></li>
-          <li><a href="#" class="btn btn--small btn--without-border" data-page="2">2</a></li>
-          <li><a href="#" class="btn btn--small btn--without-border" data-page="3">3</a></li>
-{#        {% endfor %}#}
+        {% if fundations.has_previous %}
+            <li><a href="?f_page={{ fundations.previous_page_number }}" class="btn btn--small btn--without-border" data-page="{{ fundations.previous_page_number }}">{{ fundations.previous_page_number }}</a></li>
+        {% else %}
+            <li><a href="#" class="btn btn--small btn--without-border active" data-page="{{ fundations.number }}">{{ fundations.number }}</a></li>
+        {% endif %}
+        {% if fundations.has_next %}
+            <li><a href="?f_page={{ fundations.next_page_number }}" class="btn btn--small btn--without-border" data-page="{{ fundations.next_page_number }}">{{ fundations.next_page_number }}</a></li>
+        {% else %}
+{#            <li><a href="#" class="btn btn--small btn--without-border" data-page="2">2</a></li>#}
+        {% endif %}
+
+
+{#          <li><a href="#" class="btn btn--small btn--without-border active" data-page="1">1</a></li>#}
+{#          <li><a href="#" class="btn btn--small btn--without-border" data-page="2">2</a></li>#}
+{#          <li><a href="#" class="btn btn--small btn--without-border" data-page="3">3</a></li>#}
         </ul>
+      {% endif %}
 
       </div>
 
@@ -167,14 +179,16 @@
           quos suscipit corporis!
         </p>
         <ul class="help--slides-items">
-            {% for institution in institutions %}
-                {% if institution.type == 2 %}
+            {% for organisation in organisations %}
+                {% if organisation.type == 2 %}
                     <li>
                         <div class="col">
-                            <div class="title">{{ institution.name }}</div>
-                            <div class="subtitle">{{ institution.description }}</div>
+                            <div class="title">{{ organisation.name }}</div>
+                            <div class="subtitle">{{ organisation.description }}</div>
                         </div>
-                        <div class="col"><div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+                        <div class="col">
+                            <div class="text">{{ organisation.categories }}</div>
+                        </div>
                     </li>
                 {% endif %}
             {% endfor %}
@@ -230,14 +244,16 @@
       <div class="help--slides" data-id="3">
         <p>Lorem ipsum dolor sit amet, his ocurreret persequeris ea, ad utinam laudem duo. Verterem adipisci partiendo eos ne, ea his reque quaeque recteque, ne quo lobortis intellegam.</p>
         <ul class="help--slides-items">
-            {% for institution in institutions %}
-                {% if institution.type == 3 %}
+            {% for collection in collections %}
+                {% if collection.type == 3 %}
                     <li>
                         <div class="col">
-                            <div class="title">{{ institution.name }}</div>
-                            <div class="subtitle">{{ institution.description }}</div>
+                            <div class="title">{{ collection.name }}</div>
+                            <div class="subtitle">{{ collection.description }}</div>
                         </div>
-                        <div class="col"><div class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+                        <div class="col">
+                            <div class="text">{{ collection.categories }}</div>
+                        </div>
                     </li>
                 {% endif %}
             {% endfor %}
