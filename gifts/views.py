@@ -1,4 +1,4 @@
-# from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
@@ -6,7 +6,7 @@ from gifts.forms import RegisterForm, LoginForm
 from gifts.models import Donation, Institution
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-PAGE_SIZE = 5
+PAGE_SIZE = 3
 
 
 # Create your views here.
@@ -73,36 +73,25 @@ def home(request):
 
 def login(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
+        form = AuthenticationForm(request, request.POST)
         if form.is_valid():
-            form.save()
+            #form.save()
             return redirect('/addDonation/')
+        else:
+            return redirect('/register/')
     else:
-        form = LoginForm()
-    return render(request, 'login.html', {'form': form})
+        form = AuthenticationForm()
+    return render(request, 'registration/login.html', {'form': form})
 
 
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            # user = User.objects.create(
-            #     username=form.email,
-            #     first_name=form.first_name,
-            #     last_name=form.last_name,
-            #     email=form.email,
-            #     password1=form.password1,
-            #     password2=form.password2
-            # )
-            # user.save()
-            # username = form.cleaned_data.get('email')
-            # raw_password = form.cleaned_data.get('password1')
-
             form.save()
             return redirect('/login/')
         else:
             print(form.errors)
-
     else:
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})

@@ -134,3 +134,7 @@ STATIC_URL = '/static/'
 #STATIC_ROOT = os.path.join(BASE_DIR, "gifts/static")
 
 #print(STATIC_ROOT)
+
+
+LOGIN_REDIRECT_URL = '/addDonation'
+LOGOUT_REDIRECT_URL = '/'

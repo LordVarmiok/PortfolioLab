@@ -31,13 +31,17 @@ class RegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+        fields = ['first_name', 'last_name', 'email', 'password1', 'password2']
 
-    def clean_username(self):
-        return self.cleaned_data['email']
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.username = self.cleaned_data['email']
+        if commit:
+            user.save()
+        return user
 
 
 class LoginForm(AuthenticationForm):
     class Meta:
         model = User
-        fields = ['email', 'password']
+        fields = ['username', 'password']
