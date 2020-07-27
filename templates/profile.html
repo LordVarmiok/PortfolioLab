@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <h2>Twoje dane:</h2>
+        <h2>Imię: {{ user.first_name }}</h2>
+        <h2>Nazwisko: {{ user.last_name }}</h2>
+        <h2>Email: {{ user.username }}</h2>
 
-</body>
-</html>
+        <h2>TWOJE DARY:</h2>
+        {% for donation in donations %}
+            <h3>Dla: {{ donation.institution }}</h3>
+            <h3>W środku: {{ donation.categories }}</h3>
+            <h3>Ilość worków: {{ donation.quantity }}</h3>
+            <h3>Czy odebrane: ???</h3>
+        {% endfor %}
+
+    {% endif %}
+
+{% endblock %}

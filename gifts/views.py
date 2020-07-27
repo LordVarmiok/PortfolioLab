@@ -1,5 +1,6 @@
-from django.contrib.auth import authenticate, login as auth_login
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login as auth_login, update_session_auth_hash
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -115,8 +116,27 @@ def addDonation(request):
     return render(request, 'form.html', {'categories': categories, 'institutions': institutions})
 
 
+def profile(request):
+    users_donations = Donation.objects.all().filter(user=request.user)
+    return render(request, 'profile.html', {'donations': users_donations})
+
 '''
 TO DO LIST:
 1. PAGINATORY POPRAWIC I WIDOK WYSWIETLANIA HELP W INDEX.HTML
 2. FORMULARZ REGISTER I LOGIN - CLEANED_DATA ETC
 '''
+
+
+def editProfile(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Hasło zostało zmienione')
+            return redirect('editProfile')
+        else:
+            messages.error(request, 'Popraw błędy')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'edit-profile.html', {'form': form})

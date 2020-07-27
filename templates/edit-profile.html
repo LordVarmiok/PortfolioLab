@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if user.is_authenticated %}
+
+    <div class="slogan container container--90">
+        <div class="slogan--item">
+          <h1>
+
+              <form method="post">
+                {% csrf_token %}
+        {#        {% for field in form %}#}
+                    <!-- STARE HASŁO-->
+                    <div class="form-group">
+                        <input type="password" name="old_password" placeholder="Stare hasło" />
+                    </div>
+                    <!-- NOWE HASŁO-->
+                    <div class="form-group">
+                        <input type="password" name="new_password1" placeholder="Nowe hasło" />
+                    </div>
+                    <!-- NOWE HASŁO - POWTÓRZENIE -->
+                    <div class="form-group">
+                        <input type="password" name="new_password2" placeholder="Powtórz hasło" />
+                    </div>
+        {#        {% endfor %}#}
+                <button type="submit" class="btn btn--without-border">Zmień hasło</button>
+        </form>
+
+          </h1>
+        </div>
+    </div>
+
+
+    {% endif %}
+
+{% endblock %}
