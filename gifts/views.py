@@ -1,10 +1,14 @@
+from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 
 from gifts.forms import RegisterForm, LoginForm
-from gifts.models import Donation, Institution
+from gifts.models import Donation, Institution, Category
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
+from portfolio_lab import settings
 
 PAGE_SIZE = 3
 
@@ -76,7 +80,14 @@ def login(request):
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             #form.save()
-            return redirect('/addDonation/')
+            username = User.objects.get(username=form.cleaned_data['username'])
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user:
+                if user.is_active:
+                    auth_login(request, user)
+                    return HttpResponseRedirect(request.GET.get('next', settings.LOGIN_REDIRECT_URL))
+            # return redirect('/addDonation/')
         else:
             return redirect('/register/')
     else:
@@ -98,7 +109,10 @@ def register(request):
 
 
 def addDonation(request):
-    return render(request, 'form.html', {})
+    categories = Category.objects.all()
+    institutions = Institution.objects.all()
+
+    return render(request, 'form.html', {'categories': categories, 'institutions': institutions})
 
 
 '''

@@ -16,12 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from gifts import views
+from django.contrib.auth.views import LogoutView
+
+from portfolio_lab import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     path('', views.home, name='landingPage'),
     path('login/', views.login, name='login'),
     path('register/', views.register, name='register'),
     path('addDonation/', views.addDonation, name='addDonation'),
+    path('logout/', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL},name='logout')
     # path('', include('django.contrib.auth.urls'))
 ]

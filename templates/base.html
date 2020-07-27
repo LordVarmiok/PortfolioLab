@@ -12,22 +12,49 @@
 </head>
 <body>
 <header>
+    {% if request.user.is_authenticated %}
+    <header class="header--form-page">
       <nav class="container container--70">
+        <ul class="nav--actions">
+
+          <li class="logged-user">
+            Witaj {{ user.first_name }}
+            <ul class="dropdown">
+              <li><a href="#">Profil</a></li>
+              <li><a href="#">Ustawienia</a></li>
+                {% if user.is_superuser %}
+              <li><a href="/admin/">Panel Administracyjny</a></li>
+                {% endif %}
+              <li><a href="{% url 'logout' %}">Wyloguj</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    {% else %}
+        <nav class="container container--70">
         <ul class="nav--actions">
           <li><a href="/login/">Zaloguj</a></li>
           <li class="highlighted"><a href="/register/">Załóż konto</a></li>
         </ul>
+        </nav>
+    {% endif %}
 
+    <header>
         <ul>
           <li><a href="/" class="btn btn--without-border">Start</a></li>
           <li><a href="/#steps" class="btn btn--without-border">O co chodzi?</a></li>
           <li><a href="/#about-us" class="btn btn--without-border">O nas</a></li>
           <li><a href="/#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
-          <li><a href="/addDonation/" class="btn btn--without-border">Przekaż dary</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="/addDonation/" class="btn btn--without-border">Przekaż dary</a></li>
+            {% else %}
+                <li><a href="/register/" class="btn btn--without-border">Przekaż dary</a></li>
+            {% endif %}
           <li><a href="/#contact" class="btn btn--without-border">Kontakt</a></li>
         </ul>
       </nav>
     </header>
+</header>
     {% block content %}
 {#        {% block header %}#}
 {#        {% endblock %}#}

@@ -11,20 +11,21 @@
 {#  </head>#}
 {#  <body>#}
 {% block content %}
-
-    <header class="header--form-page">
-      <nav class="container container--70">
-        <ul class="nav--actions">
-          <li class="logged-user">
-            Witaj Agata
-            <ul class="dropdown">
-              <li><a href="#">Profil</a></li>
-              <li><a href="#">Ustawienia</a></li>
-              <li><a href="#">Wyloguj</a></li>
-            </ul>
-          </li>
-        </ul>
-
+{#    {% if user.is_authenticated %}#}
+{#    <header class="header--form-page">#}
+{#      <nav class="container container--70">#}
+{#        <ul class="nav--actions">#}
+{##}
+{#          <li class="logged-user">#}
+{#            Witaj {{ user.first_name }}#}
+{#            <ul class="dropdown">#}
+{#              <li><a href="#">Profil</a></li>#}
+{#              <li><a href="#">Ustawienia</a></li>#}
+{#              <li><a href="{% url 'logout' %}">Wyloguj</a></li>#}
+{#            </ul>#}
+{#          </li>#}
+{#        </ul>#}
+{#    {% endif %}#}
 {#        <ul>#}
 {#          <li><a href="/" class="btn btn--without-border active">Start</a></li>#}
 {#          <li><a href="/#steps" class="btn btn--without-border">O co chodzi?</a></li>#}
@@ -33,8 +34,8 @@
 {#          <li><a href="form.html" class="btn btn--without-border">Przekaż dary</a></li>#}
 {#          <li><a href="/#contact" class="btn btn--without-border">Kontakt</a></li>#}
 {#        </ul>#}
-      </nav>
-
+{#      </nav>#}
+    <header class="header--form-page">
       <div class="slogan container container--90">
         <div class="slogan--item">
           <h1>
@@ -89,58 +90,60 @@
         <form action="form-confirmation.html" method="post">
           <!-- STEP 1: class .active is switching steps -->
           <div data-step="1" class="active">
+
             <h3>Zaznacz co chcesz oddać:</h3>
-
+        {% for category in categories %}
             <div class="form-group form-group--checkbox">
-              <label>
-                <input
-                  type="checkbox"
-                  name="categories"
-                  value="clothes-to-use"
-                />
-                <span class="checkbox"></span>
-                <span class="description"
-                  >ubrania, które nadają się do ponownego użycia</span
-                >
-              </label>
-            </div>
 
-            <div class="form-group form-group--checkbox">
-              <label>
-                <input
-                  type="checkbox"
-                  name="categories"
-                  value="clothes-useless"
-                />
-                <span class="checkbox"></span>
-                <span class="description">ubrania, do wyrzucenia</span>
-              </label>
-            </div>
+                    <label>
+                    <input
+                      type="checkbox"
+                      name="{{ category.name }}"
+                      value="{{ category.id }}"
+                    />
+                    <span class="checkbox"></span>
+                    <span class="description">{{ category.name }}</span>
+                  </label>
 
-            <div class="form-group form-group--checkbox">
-              <label>
-                <input type="checkbox" name="categories" value="toys" />
-                <span class="checkbox"></span>
-                <span class="description">zabawki</span>
-              </label>
             </div>
-
-            <div class="form-group form-group--checkbox">
-              <label>
-                <input type="checkbox" name="categories" value="books" />
-                <span class="checkbox"></span>
-                <span class="description">książki</span>
-              </label>
-            </div>
-
-            <div class="form-group form-group--checkbox">
-              <label>
-                <input type="checkbox" name="categories" value="other" />
-                <span class="checkbox"></span>
-                <span class="description">inne</span>
-              </label>
-            </div>
-
+        {% endfor %}
+{##}
+{#            <div class="form-group form-group--checkbox">#}
+{#              <label>#}
+{#                <input#}
+{#                  type="checkbox"#}
+{#                  name="categories"#}
+{#                  value="clothes-useless"#}
+{#                />#}
+{#                <span class="checkbox"></span>#}
+{#                <span class="description">ubrania, do wyrzucenia</span>#}
+{#              </label>#}
+{#            </div>#}
+{##}
+{#            <div class="form-group form-group--checkbox">#}
+{#              <label>#}
+{#                <input type="checkbox" name="categories" value="toys" />#}
+{#                <span class="checkbox"></span>#}
+{#                <span class="description">zabawki</span>#}
+{#              </label>#}
+{#            </div>#}
+{##}
+{#            <div class="form-group form-group--checkbox">#}
+{#              <label>#}
+{#                <input type="checkbox" name="categories" value="books" />#}
+{#                <span class="checkbox"></span>#}
+{#                <span class="description">książki</span>#}
+{#              </label>#}
+{#            </div>#}
+{##}
+{#            <div class="form-group form-group--checkbox">#}
+{#              <label>#}
+{#                <input type="checkbox" name="categories" value="other" />#}
+{#                <span class="checkbox"></span>#}
+{#                <span class="description">inne</span>#}
+{#              </label>#}
+{#            </div>#}
+{##}
             <div class="form-group form-group--buttons">
               <button type="button" class="btn next-step">Dalej</button>
             </div>
@@ -347,6 +350,6 @@
     </footer>
 
 {% endblock %}
-{#    <script src="js/app.js"></script>#}
+    <script src={% static 'js/app.js' %}></script>
 {#  </body>#}
 {#</html>#}
