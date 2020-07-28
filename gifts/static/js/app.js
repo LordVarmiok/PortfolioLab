@@ -197,6 +197,33 @@ document.addEventListener("DOMContentLoaded", function() {
       // Next step
       this.$next.forEach(btn => {
         btn.addEventListener("click", e => {
+
+          let checkboxes_arr = []
+
+          let ukryte = document.querySelectorAll('[dataname="pustak"]');
+          // console.log(ukryte);
+
+          let checkboxes = document.getElementsByTagName('input')
+          for(var i = 0; i < checkboxes.length; i++) {
+            if(checkboxes[i].type.toLowerCase() == 'checkbox' && checkboxes[i].checked == true){
+                checkboxes_arr.push(checkboxes[i])
+
+            }
+          }
+
+          console.log('Tablica z zaznaczonymi chechboxami')
+          console.log(checkboxes_arr.length) // ILOSC ZAZNACZONYCH CHECHBOXOW - ZMIENNA (1-5) ARRAY
+          console.log(checkboxes_arr)
+          //
+          // console.log('Node z ukrytymi elementami - pustakami')
+          // console.log(ukryte.length) // ILOSC LACZNA CHECHBOXOW - ZAWSZE CONST (5) NODE
+          // console.log(ukryte)
+
+          console.log('Node na tablice z ukrytymi elementami - pustakami')
+          var ukryte_arr = Array.prototype.slice.call(ukryte);
+          console.log(ukryte_arr)
+
+
           e.preventDefault();
           this.currentStep++;
           this.updateForm();
@@ -255,3 +282,6 @@ document.addEventListener("DOMContentLoaded", function() {
     new FormSteps(form);
   }
 });
+
+
+

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 
-from gifts.forms import RegisterForm, LoginForm
+from gifts.forms import RegisterForm, LoginForm, DonationForm
 from gifts.models import Donation, Institution, Category
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
@@ -113,7 +113,20 @@ def addDonation(request):
     categories = Category.objects.all()
     institutions = Institution.objects.all()
 
-    return render(request, 'form.html', {'categories': categories, 'institutions': institutions})
+    if request.method == 'POST':
+        form = DonationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/confirmation/')
+        else:
+            print(form.errors)
+    else:
+        form = DonationForm()
+    return render(request, 'form.html', {'categories': categories, 'institutions': institutions, 'form': form})
+
+
+def confirmation(request):
+    return render(request, 'form-confirmation.html', {})
 
 
 def profile(request):

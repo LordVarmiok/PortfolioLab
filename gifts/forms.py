@@ -24,6 +24,7 @@ from django.contrib.auth.models import User
 #         if self.data['password1'] != self.data['password2']:
 #             raise forms.ValidationError('Passwords do not match')
 #         return self.data['password1']
+from gifts.models import Donation
 
 
 class RegisterForm(UserCreationForm):
@@ -45,3 +46,9 @@ class LoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ['username', 'password']
+
+
+class DonationForm(forms.Form):
+    class Meta:
+        model = Donation
+        exclude = ['categories','quantity', 'categories']

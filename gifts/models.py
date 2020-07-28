@@ -27,11 +27,11 @@ class Institution(models.Model):
 
 
 class Donation(models.Model):
-    quantity = models.IntegerField()# ilosc workow
+    quantity = models.IntegerField()  # ilosc workow
     categories = models.ManyToManyField(Category)
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
-    address = models.CharField(max_length=128)# adres dawcy
-    phone_number = models.CharField(max_length=12) # nr tel dawcy
+    address = models.CharField(max_length=128)  # adres dawcy
+    phone_number = models.CharField(max_length=12)  # nr tel dawcy
     city = models.CharField(max_length=64)
     zip_code = models.CharField(max_length=6)
     pick_up_date = models.DateField()
