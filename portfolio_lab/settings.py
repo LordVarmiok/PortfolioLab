@@ -138,3 +138,7 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/addDonation'
 LOGOUT_REDIRECT_URL = '/'
+
+
+DEFAULT_FROM_EMAIL = 'mail@mail.net'
+EMAIL_BACKEND = 'django.core.mail.backends.console.Email.Backend'

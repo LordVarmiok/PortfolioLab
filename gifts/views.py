@@ -2,15 +2,15 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, update_session_auth_hash
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 
-from gifts.forms import RegisterForm, LoginForm, DonationForm
+from gifts.forms import RegisterForm, LoginForm, DonationForm, ArchiveForm, ContactForm
 from gifts.models import Donation, Institution, Category
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from portfolio_lab import settings
-
+from django.core.mail import send_mail, BadHeaderError
 PAGE_SIZE = 3
 
 
@@ -45,8 +45,25 @@ def home(request):
         organisations = organisations_paginator.page(organisations_paginator.num_pages)
         collections = collections_paginator.page(collections_paginator.num_pages)
 
+    # OBSŁUGA MAILA
+
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            from_email = form.cleaned_data['from_email']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, from_email, ['admin@mail.net'])
+            except BadHeaderError as e:
+                print(e)
+                return HttpResponse('Invalid header found')
+            return redirect('confirmation')
+    else:
+        form = ContactForm()
 
     context = {
+        'form': form,
         'donation_num': donation_num,
         'organisation_num': organisation_num,
 
@@ -68,10 +85,6 @@ def home(request):
         #     'collections_page': collections_page,
         #     'collections_paginator': collections_paginator,
         #     'collections_current_page': 0,
-
-
-
-
     }
     return render(request, 'index.html', context)
 
@@ -130,8 +143,16 @@ def confirmation(request):
 
 
 def profile(request):
-    users_donations = Donation.objects.all().filter(user=request.user)
-    return render(request, 'profile.html', {'donations': users_donations})
+    users_donations = Donation.objects.all().filter(user=request.user).order_by('is_taken')
+
+    if request.method == 'POST':
+        form = ArchiveForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'profile.html', {'donations': users_donations, 'form': form})
+    else:
+        form = ArchiveForm()
+    return render(request, 'profile.html', {'donations': users_donations, 'form': form})
 
 '''
 TO DO LIST:
@@ -153,3 +174,4 @@ def editProfile(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'edit-profile.html', {'form': form})
+

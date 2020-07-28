@@ -12,12 +12,29 @@
         <div class="container--90">
             <h2>TWOJE DARY:</h2>
             {% for donation in donations %}
-                <h2>Dla: {{ donation.institution }}</h2>
-                <h2>W środku: {{ donation.categories }}</h2>
-                <h2>Ilość worków: {{ donation.quantity }}</h2>
-                <h2>Czy odebrane: ???</h2>
+                <ul>
+                    <li>Dla: {{ donation.institution }}</li>
+                    <li>W środku:
+                        {% for category in donation.categories.all %}
+                            {{ category }},
+                        {% endfor %}
+                    </li>
+                    <li>Ilość worków: {{ donation.quantity }}</li>
+                    <li>Czy odebrane:
+                        {% if donation.is_taken %}
+                            TAK
+                        {% else %}
+                            NIE
+                        {% endif %}
+                    </li>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn" type="submit">Archiwizuj</button>
+                </form>
+
+                </ul>
             {% endfor %}
         </div>
-
     {% endif %}
 {% endblock %}

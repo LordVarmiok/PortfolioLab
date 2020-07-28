@@ -48,7 +48,21 @@ class LoginForm(AuthenticationForm):
         fields = ['username', 'password']
 
 
-class DonationForm(forms.Form):
+class DonationForm(forms.ModelForm):
     class Meta:
         model = Donation
         exclude = ['categories','quantity', 'categories']
+
+
+class ArchiveForm(forms.ModelForm):
+    class Meta:
+        model = Donation
+        fields = ['is_taken']
+
+
+class ContactForm(forms.Form):
+    # first_name = forms.CharField(required=True, max_length=254)
+    # last_name = forms.CharField(required=True, max_length=254)
+    from_email = forms.EmailField(required=True)
+    subject = forms.CharField(required=True, max_length=254)
+    message = forms.CharField(required=True, max_length=254)
