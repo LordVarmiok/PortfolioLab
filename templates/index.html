@@ -157,9 +157,11 @@
             <li><a href="#help" class="btn btn--small btn--without-border active" data-page="{{ fundations.number }}">{{ fundations.number }}</a></li>
         {% endif %}
         {% if fundations.has_next %}
+
             <li><a href="/?f_page={{ fundations.next_page_number }}#help" class="btn btn--small btn--without-border" data-page="{{ fundations.next_page_number }}">{{ fundations.next_page_number }}</a></li>
         {% else %}
-{#            <li><a href="#" class="btn btn--small btn--without-border" data-page="2">2</a></li>#}
+
+            <li><a href="/?f_page={{ fundations.previous_page_number }}#help" class="btn btn--small btn--without-border" data-page="{{ fundations.previous_page_number }}">{{ fundations.previous_page_number }}</a></li>
         {% endif %}
 
 
