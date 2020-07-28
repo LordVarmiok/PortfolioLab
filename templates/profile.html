@@ -1,19 +1,23 @@
 {% extends 'base.html' %}
-{% block content %}
-    {% if user.is_authenticated %}
-        <h2>Twoje dane:</h2>
-        <h2>Imię: {{ user.first_name }}</h2>
-        <h2>Nazwisko: {{ user.last_name }}</h2>
-        <h2>Email: {{ user.username }}</h2>
 
-        <h2>TWOJE DARY:</h2>
-        {% for donation in donations %}
-            <h3>Dla: {{ donation.institution }}</h3>
-            <h3>W środku: {{ donation.categories }}</h3>
-            <h3>Ilość worków: {{ donation.quantity }}</h3>
-            <h3>Czy odebrane: ???</h3>
-        {% endfor %}
+{% block slogan %}
+    {% if user.is_authenticated %}
+        <div class="container--90">
+            <h2>Twoje dane:</h2>
+            <h2>Imię: {{ user.first_name }}</h2>
+            <h2>Nazwisko: {{ user.last_name }}</h2>
+            <h2>Email: {{ user.username }}</h2>
+        </div>
+
+        <div class="container--90">
+            <h2>TWOJE DARY:</h2>
+            {% for donation in donations %}
+                <h2>Dla: {{ donation.institution }}</h2>
+                <h2>W środku: {{ donation.categories }}</h2>
+                <h2>Ilość worków: {{ donation.quantity }}</h2>
+                <h2>Czy odebrane: ???</h2>
+            {% endfor %}
+        </div>
 
     {% endif %}
-
 {% endblock %}

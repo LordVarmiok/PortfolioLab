@@ -10,7 +10,7 @@
 {#    <link rel="stylesheet" href="{% static 'css/style.css' %}" />#}
 {#  </head>#}
 {#  <body>#}
-{% block content %}
+
 {#    {% if user.is_authenticated %}#}
 {#    <header class="header--form-page">#}
 {#      <nav class="container container--70">#}
@@ -35,7 +35,8 @@
 {#          <li><a href="/#contact" class="btn btn--without-border">Kontakt</a></li>#}
 {#        </ul>#}
 {#      </nav>#}
-    <header class="header--form-page">
+{#    <header class="header--form-page">#}
+    {% block slogan %}
       <div class="slogan container container--90">
         <div class="slogan--item">
           <h1>
@@ -62,8 +63,9 @@
           </div>
         </div>
       </div>
-    </header>
-
+        {% endblock %}
+{#    </header>#}
+{% block content %}
     <section class="form--steps">
       <div class="form--steps-instructions">
         <div class="form--steps-container">

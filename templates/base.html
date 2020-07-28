@@ -12,7 +12,75 @@
 </head>
 <body>
 
-    {% if request.user.is_authenticated %}
+    {% if request.user.is_authenticated and request.path == '/' %}
+    <header class="header--form-page">
+      <nav class="container container--70">
+        <ul class="nav--actions">
+
+          <li class="logged-user">
+            Witaj {{ user.first_name }}
+            <ul class="dropdown">
+              <li><a href="/profile/">Profil</a></li>
+              <li><a href="/editProfile/">Ustawienia</a></li>
+                {% if user.is_superuser %}
+              <li><a href="/admin/">Panel Administracyjny</a></li>
+                {% endif %}
+              <li><a href="{% url 'logout' %}">Wyloguj</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul>
+          <li><a href="/" class="btn btn--without-border">Start</a></li>
+          <li><a href="/#steps" class="btn btn--without-border">O co chodzi?</a></li>
+          <li><a href="/#about-us" class="btn btn--without-border">O nas</a></li>
+          <li><a href="/#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="/addDonation/" class="btn btn--without-border">Przekaż dary</a></li>
+            {% else %}
+                <li><a href="/register/" class="btn btn--without-border">Przekaż dary</a></li>
+            {% endif %}
+          <li><a href="/#contact" class="btn btn--without-border">Kontakt</a></li>
+        </ul>
+      </nav>
+        {% if request.path == '/' %}
+        <div class="slogan container container--90">
+            <div class="slogan--item">
+              <h1>
+                Zacznij pomagać!<br />
+                Oddaj niechciane rzeczy w zaufane ręce
+              </h1>
+            </div>
+          </div>
+            {% endif %}
+        </header>
+
+    {% elif request.path == '/' %}
+
+        <header class="header--main-page">
+        <nav class="container container--70">
+        <ul class="nav--actions">
+          <li><a href="/login/">Zaloguj</a></li>
+          <li class="highlighted"><a href="/register/">Załóż konto</a></li>
+        </ul>
+
+        <ul>
+          <li><a href="/" class="btn btn--without-border">Start</a></li>
+          <li><a href="/#steps" class="btn btn--without-border">O co chodzi?</a></li>
+          <li><a href="/#about-us" class="btn btn--without-border">O nas</a></li>
+          <li><a href="/#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="/addDonation/" class="btn btn--without-border">Przekaż dary</a></li>
+            {% else %}
+                <li><a href="/register/" class="btn btn--without-border">Przekaż dary</a></li>
+            {% endif %}
+          <li><a href="/#contact" class="btn btn--without-border">Kontakt</a></li>
+        </ul>
+      </nav>
+
+    </header>
+        </header>
+
+    {% elif user.is_authenticated and request.path != '/' %}
     <header class="header--form-page">
       <nav class="container container--70">
         <ul class="nav--actions">
@@ -43,39 +111,9 @@
         </ul>
       </nav>
 
-    <div class="slogan container container--90">
-        <div class="slogan--item">
-          <h1>
-            Zacznij pomagać!<br />
-            Oddaj niechciane rzeczy w zaufane ręce
-          </h1>
-        </div>
-      </div>
+    {% block slogan %}
+    {% endblock %}
     </header>
-
-    {% else %}
-
-        <header class="header--main-page">
-        <nav class="container container--70">
-        <ul class="nav--actions">
-          <li><a href="/login/">Zaloguj</a></li>
-          <li class="highlighted"><a href="/register/">Załóż konto</a></li>
-        </ul>
-
-        <ul>
-          <li><a href="/" class="btn btn--without-border">Start</a></li>
-          <li><a href="/#steps" class="btn btn--without-border">O co chodzi?</a></li>
-          <li><a href="/#about-us" class="btn btn--without-border">O nas</a></li>
-          <li><a href="/#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
-            {% if user.is_authenticated %}
-                <li><a href="/addDonation/" class="btn btn--without-border">Przekaż dary</a></li>
-            {% else %}
-                <li><a href="/register/" class="btn btn--without-border">Przekaż dary</a></li>
-            {% endif %}
-          <li><a href="/#contact" class="btn btn--without-border">Kontakt</a></li>
-        </ul>
-      </nav>
-        </header>
     {% endif %}
 
     <header>
