@@ -66,3 +66,9 @@ class ContactForm(forms.Form):
     from_email = forms.EmailField(required=True)
     subject = forms.CharField(required=True, max_length=254)
     message = forms.CharField(required=True, max_length=254)
+
+
+class SecondDonationForm(forms.ModelForm):
+    class Meta:
+        model = Donation
+        exclude = ['is_taken']

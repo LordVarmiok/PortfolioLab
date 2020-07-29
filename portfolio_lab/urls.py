@@ -26,9 +26,11 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('register/', views.register, name='register'),
     path('addDonation/', views.addDonation, name='addDonation'),
+    path('donationTwo/', views.donation_two, name='donationTwo'),
     path('logout/', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
     # path('', include('django.contrib.auth.urls'))
     path('profile/', views.profile, name='profile'),
     path('editProfile/', views.editProfile, name='editProfile'),
-    path('confirmation/', views.confirmation, name='confirmation')
+    path('confirmation/', views.confirmation, name='confirmation'),
+    path('get_institution_by_category/',views.get_institution_by_categories, name='get_inst' )
 ]

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 
-from gifts.forms import RegisterForm, LoginForm, DonationForm, ArchiveForm, ContactForm
+from gifts.forms import RegisterForm, LoginForm, DonationForm, ArchiveForm, ContactForm, SecondDonationForm
 from gifts.models import Donation, Institution, Category
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
@@ -175,3 +175,31 @@ def editProfile(request):
         form = PasswordChangeForm(request.user)
     return render(request, 'edit-profile.html', {'form': form})
 
+
+def donation_two(request):
+    categories = Category.objects.all()
+    institutions = Institution.objects.all()
+
+    if request.method == 'POST':
+        form = SecondDonationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/confirmation/')
+    else:
+        form = SecondDonationForm()
+    return render(request, 'form2.html', {'form': form, 'categories': categories, 'institutions': institutions})
+
+
+def get_institution_by_categories(request):
+    id_cats = request.GET.getlist('cat_ids')
+    print(id_cats)
+    institutions = Institution.objects.filter(categories__in=id_cats)
+    return render(request, 'institution_api.html', {'institutions':institutions})
+
+
+def get_institution_and_category(request):
+    id_cats = request.GET.getlist('cat_ids')
+    id_inst = request.GET.get('inst_ids')
+    categories = Category.objects.filter(id=id_cats)
+    institution = Institution.objects.filter(id=id_inst)
+    return render(request, 'cat_inst_api.html', {'categories': categories, 'institution': institution})
